@@ -1,0 +1,11 @@
+,valor
+fecha_ejecucion,2026-11-04 20:00
+n_clientes,185000
+tasa_abandono_global,0.239
+Accuracy,0.792
+Precisión,0.489
+Recall,0.75
+F1-score,0.592
+ROC-AUC,0.856
+umbral_clasificacion,0.414
+brecha_recall_regiones,0.015

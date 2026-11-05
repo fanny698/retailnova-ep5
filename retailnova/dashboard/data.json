@@ -1,0 +1,399 @@
+{
+  "kpis": {
+    "n_clientes": 185000,
+    "tasa_abandono_global": 0.239,
+    "clientes_alto_riesgo": 38484,
+    "roc_auc": 0.856,
+    "recall": 0.75,
+    "precision": 0.489,
+    "brecha_recall_regiones": 0.015
+  },
+  "por_region": [
+    {
+      "region": "Biobío",
+      "n_clientes": 24116,
+      "tasa_abandono": 0.2384,
+      "score_promedio": 0.373
+    },
+    {
+      "region": "Metropolitana",
+      "n_clientes": 125774,
+      "tasa_abandono": 0.2386,
+      "score_promedio": 0.371
+    },
+    {
+      "region": "Valparaíso",
+      "n_clientes": 35110,
+      "tasa_abandono": 0.2434,
+      "score_promedio": 0.3748
+    }
+  ],
+  "por_categoria": [
+    {
+      "categoria_principal": "Electrodomésticos",
+      "n_clientes": 46668,
+      "tasa_abandono": 0.1558,
+      "score_promedio": 0.26
+    },
+    {
+      "categoria_principal": "Hogar",
+      "n_clientes": 84893,
+      "tasa_abandono": 0.337,
+      "score_promedio": 0.5012
+    },
+    {
+      "categoria_principal": "Tecnología",
+      "n_clientes": 53439,
+      "tasa_abandono": 0.1576,
+      "score_promedio": 0.2644
+    }
+  ],
+  "segmentos_riesgo": {
+    "Bajo": 108074,
+    "Medio": 38442,
+    "Alto": 38484
+  },
+  "segmento_por_region": [
+    {
+      "region": "Biobío",
+      "Bajo": 14009,
+      "Medio": 5050,
+      "Alto": 5057
+    },
+    {
+      "region": "Metropolitana",
+      "Bajo": 73650,
+      "Medio": 26108,
+      "Alto": 26016
+    },
+    {
+      "region": "Valparaíso",
+      "Bajo": 20415,
+      "Medio": 7284,
+      "Alto": 7411
+    }
+  ],
+  "top_riesgo": [
+    {
+      "cliente_id": "CUST-127544",
+      "region": "Valparaíso",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 699,
+      "monto_promedio": 22800.0,
+      "reclamos": 2,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-106584",
+      "region": "Valparaíso",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 19100.0,
+      "reclamos": 1,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-012709",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 21500.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-068845",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 23000.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-131542",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 19200.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-170532",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 18800.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-119905",
+      "region": "Valparaíso",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 22800.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-107986",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 13600.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-141240",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 32100.0,
+      "reclamos": 1,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-096632",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 18000.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-096220",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 32800.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-143422",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 23500.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-052693",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 22200.0,
+      "reclamos": 1,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-050977",
+      "region": "Biobío",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 25300.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-068153",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 16100.0,
+      "reclamos": 1,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-055067",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 21900.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-153410",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 19000.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-031771",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 28200.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-036637",
+      "region": "Valparaíso",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 28800.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-150517",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 16400.0,
+      "reclamos": 1,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-155935",
+      "region": "Valparaíso",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 43300.0,
+      "reclamos": 2,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-119235",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 25900.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-070401",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 35700.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-067805",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "E-commerce",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 30100.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    },
+    {
+      "cliente_id": "CUST-184411",
+      "region": "Metropolitana",
+      "categoria_principal": "Hogar",
+      "canal_compra": "Tienda física",
+      "dias_desde_ultima_compra": 700,
+      "monto_promedio": 39400.0,
+      "reclamos": 0,
+      "score_riesgo": 1.0,
+      "segmento_riesgo": "Alto"
+    }
+  ],
+  "histograma_score": {
+    "bins": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95
+    ],
+    "conteos": [
+      5123,
+      28131,
+      22908,
+      18949,
+      15177,
+      11841,
+      9527,
+      7790,
+      6696,
+      5766,
+      5023,
+      4498,
+      4265,
+      4024,
+      3922,
+      3881,
+      3915,
+      4368,
+      5150,
+      14046
+    ]
+  }
+}

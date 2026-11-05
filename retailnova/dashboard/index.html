@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RetailNova · Dashboard de abandono de clientes</title>
+<script src="chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#1E2761; --ice:#CADCFC; --gold:#D4A017; --blue:#4F81BD; --green:#59A14F;
+    --red:#C0504D; --orange:#E28A2B; --gray:#7F7F7F; --bg:#F4F6FB; --card:#FFFFFF;
+    --text:#1b1f33; --muted:#5b6178; --border:#E3E7F1;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI",Arial,sans-serif;}
+  header{background:linear-gradient(135deg,var(--navy),#2d3a85); color:#fff; padding:28px 32px;}
+  header h1{margin:0 0 4px; font-size:1.5rem;}
+  header p{margin:0; color:var(--ice); font-size:0.95rem;}
+  main{max-width:1200px; margin:0 auto; padding:24px 20px 60px;}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-bottom:26px;}
+  .kpi{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; box-shadow:0 1px 3px rgba(20,25,60,0.05);}
+  .kpi .label{font-size:0.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em;}
+  .kpi .value{font-size:1.65rem; font-weight:700; color:var(--navy); margin-top:4px;}
+  .kpi .value.alert{color:#9c1d96;}
+  .kpi .value.good{color:#1b7a1b;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-bottom:18px;}
+  @media (max-width:860px){ .grid2,.grid3{grid-template-columns:1fr;} }
+  .card{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px; box-shadow:0 1px 3px rgba(20,25,60,0.05);}
+  .card h2{margin:0 0 4px; font-size:1.02rem; color:var(--navy);}
+  .card .sub{margin:0 0 12px; font-size:0.82rem; color:var(--muted);}
+  canvas{max-height:260px;}
+  table{width:100%; border-collapse:collapse; font-size:0.84rem;}
+  th,td{padding:7px 8px; text-align:left; border-bottom:1px solid var(--border);}
+  th{color:var(--muted); font-weight:600; font-size:0.74rem; text-transform:uppercase;}
+  tr:hover td{background:#F8F9FD;}
+  .badge{display:inline-block; padding:2px 9px; border-radius:999px; font-size:0.74rem; font-weight:600;}
+  .badge.Alto{background:#ffc1ff; color:#9c1d96; border:1px solid fuchsia;}
+  .badge.Medio{background:#cfe9fb; color:#1a5c8a; border:1px solid blue;}
+  .badge.Bajo{background:#c8f7c5; color:#1b7a1b; border:1px solid darkgreen;}
+  footer{text-align:center; color:var(--muted); font-size:0.78rem; padding:20px; border-top:1px solid var(--border);}
+  .err{max-width:700px; margin:60px auto; text-align:center; color:var(--red);}
+</style>
+</head>
+<body>
+<header>
+  <h1>RetailNova · Dashboard de predicción de abandono</h1>
+  <p>Prototipo funcional (EP5) — se alimenta de <code>outputs/clientes_scored.csv</code>, generado por el notebook de modelado.</p>
+</header>
+<main id="app">
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid3">
+    <div class="card">
+      <h2>Clientes por segmento de riesgo</h2>
+      <p class="sub">Umbral de clasificación ajustado para priorizar recall (ver notebook, sección 5.3)</p>
+      <canvas id="chartSegmentos"></canvas>
+    </div>
+    <div class="card">
+      <h2>Tasa de abandono por región</h2>
+      <p class="sub">Contexto de equidad (RF07): compara contra el recall por región más abajo</p>
+      <canvas id="chartRegion"></canvas>
+    </div>
+    <div class="card">
+      <h2>Tasa de abandono por categoría</h2>
+      <p class="sub">Criterio diferenciado: Hogar (6 meses) vs. Tecnología/Electrodomésticos (9 meses)</p>
+      <canvas id="chartCategoria"></canvas>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Distribución del score de riesgo</h2>
+      <p class="sub">Score = probabilidad de abandono estimada por el modelo (0–1)</p>
+      <canvas id="chartHistograma"></canvas>
+    </div>
+    <div class="card">
+      <h2>Segmento de riesgo por región</h2>
+      <p class="sub">Verifica que ninguna región concentra desproporcionadamente el riesgo "Alto"</p>
+      <canvas id="chartSegmentoRegion"></canvas>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px;">
+    <h2>Top 25 clientes de mayor riesgo</h2>
+    <p class="sub">Lista de priorización para el equipo comercial (acción de retención)</p>
+    <div style="overflow-x:auto;">
+      <table id="tablaTop">
+        <thead>
+          <tr>
+            <th>Cliente</th><th>Región</th><th>Categoría</th><th>Canal</th>
+            <th>Días sin comprar</th><th>Monto prom.</th><th>Reclamos</th><th>Score</th><th>Segmento</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<footer>RetailNova · Proyecto Gestión de Proyectos de Datos (SCY1102) · Generado a partir del modelo entrenado en <code>notebooks/01_prediccion_abandono.ipynb</code></footer>
+
+<script>
+const PALETTE = {
+  bajo:'#00EE00', bajoBorder:'darkgreen',
+  medio:'skyblue', medioBorder:'blue',
+  alto:'#ffc1ff', altoBorder:'fuchsia',
+  region:'skyblue', regionBorder:'blue',
+  categoria:'#ffc1ff', categoriaBorder:'fuchsia',
+  hist:'skyblue', histBorder:'blue',
+  navy:'#1E2761', gray:'#B9C0D4'
+};
+
+fetch('data.json').then(r => {
+  if (!r.ok) throw new Error('No se pudo cargar data.json');
+  return r.json();
+}).then(renderAll).catch(err => {
+  document.getElementById('app').innerHTML =
+    '<div class="err"><p>No se pudo cargar <code>data.json</code>.</p>' +
+    '<p>Abre este dashboard sirviéndolo con un servidor local (ej. <code>python3 -m http.server</code> en la carpeta <code>dashboard/</code>) ' +
+    'en vez de abrir el archivo index.html directamente, o verifica que data.json esté en la misma carpeta.</p></div>';
+  console.error(err);
+});
+
+function pct(x){ return (x*100).toFixed(1) + '%'; }
+
+function renderAll(data){
+  // KPIs
+  const kpis = [
+    {label:'Clientes analizados', value: data.kpis.n_clientes.toLocaleString('es-CL')},
+    {label:'Tasa de abandono', value: pct(data.kpis.tasa_abandono_global), cls:'alert'},
+    {label:'Clientes en riesgo alto', value: data.kpis.clientes_alto_riesgo.toLocaleString('es-CL'), cls:'alert'},
+    {label:'ROC-AUC del modelo', value: data.kpis.roc_auc.toFixed(3), cls:'good'},
+    {label:'Recall (ajustado)', value: pct(data.kpis.recall), cls:'good'},
+    {label:'Brecha recall entre regiones', value: data.kpis.brecha_recall_regiones.toFixed(3)},
+  ];
+  document.getElementById('kpis').innerHTML = kpis.map(k =>
+    `<div class="kpi"><div class="label">${k.label}</div><div class="value ${k.cls||''}">${k.value}</div></div>`
+  ).join('');
+
+  // Segmentos de riesgo (doughnut)
+  new Chart(document.getElementById('chartSegmentos'), {
+    type:'doughnut',
+    data:{ labels:['Bajo','Medio','Alto'],
+      datasets:[{ data:[data.segmentos_riesgo.Bajo, data.segmentos_riesgo.Medio, data.segmentos_riesgo.Alto],
+        backgroundColor:[PALETTE.bajo, PALETTE.medio, PALETTE.alto],
+        borderColor:[PALETTE.bajoBorder, PALETTE.medioBorder, PALETTE.altoBorder],
+        borderWidth:2 }] },
+    options:{ plugins:{legend:{position:'bottom'}} }
+  });
+
+  // Tasa de abandono por región (bar)
+  new Chart(document.getElementById('chartRegion'), {
+    type:'bar',
+    data:{ labels:data.por_region.map(r=>r.region),
+      datasets:[{ label:'Tasa de abandono', data:data.por_region.map(r=>r.tasa_abandono),
+        backgroundColor:PALETTE.region, borderColor:PALETTE.regionBorder, borderWidth:1.5 }] },
+    options:{ plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{callback:v=>pct(v)}}} }
+  });
+
+  // Tasa de abandono por categoría (bar)
+  new Chart(document.getElementById('chartCategoria'), {
+    type:'bar',
+    data:{ labels:data.por_categoria.map(r=>r.categoria_principal),
+      datasets:[{ label:'Tasa de abandono', data:data.por_categoria.map(r=>r.tasa_abandono),
+        backgroundColor:PALETTE.categoria, borderColor:PALETTE.categoriaBorder, borderWidth:1.5 }] },
+    options:{ plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{callback:v=>pct(v)}}} }
+  });
+
+  // Histograma de score
+  new Chart(document.getElementById('chartHistograma'), {
+    type:'bar',
+    data:{ labels:data.histograma_score.bins.map(b=>b.toFixed(2)),
+      datasets:[{ label:'N° de clientes', data:data.histograma_score.conteos,
+        backgroundColor:PALETTE.hist, borderColor:PALETTE.histBorder, borderWidth:1.5 }] },
+    options:{ plugins:{legend:{display:false}}, scales:{x:{title:{display:true,text:'Score de riesgo'}}} }
+  });
+
+  // Segmento por región (stacked bar)
+  new Chart(document.getElementById('chartSegmentoRegion'), {
+    type:'bar',
+    data:{ labels:data.segmento_por_region.map(r=>r.region),
+      datasets:[
+        {label:'Bajo', data:data.segmento_por_region.map(r=>r.Bajo), backgroundColor:PALETTE.bajo, borderColor:PALETTE.bajoBorder, borderWidth:1.5},
+        {label:'Medio', data:data.segmento_por_region.map(r=>r.Medio), backgroundColor:PALETTE.medio, borderColor:PALETTE.medioBorder, borderWidth:1.5},
+        {label:'Alto', data:data.segmento_por_region.map(r=>r.Alto), backgroundColor:PALETTE.alto, borderColor:PALETTE.altoBorder, borderWidth:1.5},
+      ] },
+    options:{ plugins:{legend:{position:'bottom'}}, scales:{x:{stacked:true}, y:{stacked:true}} }
+  });
+
+  // Tabla top riesgo
+  const tbody = document.querySelector('#tablaTop tbody');
+  tbody.innerHTML = data.top_riesgo.map(c => `
+    <tr>
+      <td>${c.cliente_id}</td><td>${c.region}</td><td>${c.categoria_principal}</td><td>${c.canal_compra}</td>
+      <td>${c.dias_desde_ultima_compra}</td><td>$${Number(c.monto_promedio).toLocaleString('es-CL')}</td>
+      <td>${c.reclamos}</td><td>${c.score_riesgo.toFixed(3)}</td>
+      <td><span class="badge ${c.segmento_riesgo}">${c.segmento_riesgo}</span></td>
+    </tr>`).join('');
+}
+</script>
+</body>
+</html>
