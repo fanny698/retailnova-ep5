@@ -1,6 +1,6 @@
 # RetailNova — Predicción de abandono de clientes
 
-Proyecto de la asignatura **Gestión de Proyectos de Datos (SCY1102)**, Evaluación Parcial N°5,
+**Gestión de Proyectos de Datos**, Evaluación Parcial N°5,
 caso *Caso 1. RetailNova*. Equipo: Stephanie Chamorro, María Calfileo, Rocío Cruces.
 
 Implementa el pipeline completo de ciencia de datos (metodología CRISP-DM) para predecir el

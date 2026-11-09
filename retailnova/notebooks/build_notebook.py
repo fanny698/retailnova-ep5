@@ -421,7 +421,8 @@ nb['metadata'] = {
     "language_info": {"name": "python", "version": "3.12"},
 }
 
-with open('/home/claude/retailnova/notebooks/01_prediccion_abandono.ipynb', 'w') as f:
+from pathlib import Path
+with open(Path(__file__).resolve().parent / '01_prediccion_abandono.ipynb', 'w', encoding='utf-8') as f:
     nbf.write(nb, f)
 
 print("Notebook escrito.")

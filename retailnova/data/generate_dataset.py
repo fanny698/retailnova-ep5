@@ -246,7 +246,8 @@ for i, h in enumerate(headers, start=1):
     ws.column_dimensions[get_column_letter(i)].width = widths.get(h, 13)
 ws.freeze_panes = "A2"
 
-out_path = "/home/claude/retailnova/data/retailnova_clientes.xlsx"
+from pathlib import Path
+out_path = str(Path(__file__).resolve().parent / "retailnova_clientes.xlsx")
 wb.save(out_path)
 
 print("Filas:", len(df))
